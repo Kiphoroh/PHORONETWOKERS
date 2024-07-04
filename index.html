@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHORONETWORKS</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 2em;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .signup-form {
+            background-color: white;
+            padding: 2em;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .signup-form input[type="text"], 
+        .signup-form input[type="password"], 
+        .signup-form input[type="submit"] {
+            width: 100%;
+            padding: 1em;
+            margin: 0.5em 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .dashboard {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to PHORONETWORKS</h1>
+</header>
+
+<div class="container">
+    <section id="home">
+        <h2>About PHORONETWORKS</h2>
+        <p>PHORONETWORKS is a referral-based network where members can earn rewards by referring others. Join today and start earning!</p>
+    </section>
+
+    <section id="signup">
+        <h2>Sign Up</h2>
+        <form class="signup-form" id="signup-form">
+            <input type="text" id="name" name="name" placeholder="Full Name" required>
+            <input type="text" id="phone" name="phone" placeholder="Phone Number (Safaricom)" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="text" id="referral" name="referral" placeholder="Referral Code (optional)">
+            <input type="submit" value="Sign Up">
+        </form>
+    </section>
+
+    <section id="dashboard" class="dashboard">
+        <h2>Member Dashboard</h2>
+        <p>Welcome, <span id="member-name"></span>!</p>
+        <p>Your referral link: <a href="#" id="referral-link"></a></p>
+        <h3>Wallet</h3>
+        <p>Current Balance: KES <span id="wallet-balance">0</span></p>
+        <button onclick="handleWithdrawal()">Withdraw Funds</button>
+        <h3>Referral History</h3>
+        <ul id="referral-history">
+            <!-- Referral history will be populated here -->
+        </ul>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2024 PHORONETWORKS. All rights reserved.</p>
+</footer>
+
+<script>
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('password').value;
+        const referral = document.getElementById('referral').value;
+
+        // Dummy registration logic
+        localStorage.setItem('name', name);
+        localStorage.setItem('phone', phone);
+        localStorage.setItem('walletBalance', 0);
+        localStorage.setItem('referralCode', 'PHORO-' + Math.floor(Math.random() * 10000));
+
+        // Display dashboard
+        document.querySelector('.signup-form').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('member-name').innerText = name;
+        document.getElementById('referral-link').innerText = window.location.href + '?ref=' + localStorage.getItem('referralCode');
+        document.getElementById('wallet-balance').innerText = localStorage.getItem('walletBalance');
+
+        // Mpesa payment simulation (you'll replace this with real Mpesa integration)
+        simulateMpesaPayment(name, phone);
+    });
+
+    function simulateMpesaPayment(name, phone) {
+        // Simulate a successful Mpesa payment
+        console.log(`Simulating Mpesa payment for ${name} (${phone})`);
+        alert('Mpesa payment successful. Welcome to PHORONETWORKS!');
+    }
+
+    function handleWithdrawal() {
+        const balance = parseInt(localStorage.getItem('walletBalance'));
+        if (balance >= 75) {
+            alert('Withdrawal request submitted.');
+            // Deduct from balance (dummy logic)
+            localStorage.setItem('walletBalance', balance - 75);
+            document.getElementById('wallet-balance').innerText = localStorage.getItem('walletBalance');
+        } else {
+            alert('Minimum withdrawal amount is KES 75.');
+        }
+    }
+</script>
+
+</body>
+</html>
